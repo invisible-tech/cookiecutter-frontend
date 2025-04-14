@@ -1,0 +1,9 @@
+{
+    "project_name": "Name of the project (e.g. 'Workforce One')",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "project_short_description": "A short description of the project",
+    "first_name": "Your first name",
+    "last_name": "Your last name",
+    "email": "{{ cookiecutter.first_name.lower() }}.{{ cookiecutter.last_name.lower() }}@invisible.email",
+    "release_date": "{% now 'local' %}"
+}
