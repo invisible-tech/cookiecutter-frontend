@@ -5,5 +5,9 @@
     "first_name": "Your first name",
     "last_name": "Your last name",
     "email": "{{ cookiecutter.first_name.lower() }}.{{ cookiecutter.last_name.lower() }}@invisible.email",
-    "release_date": "{% now 'local' %}"
+    "release_date": "{% now 'local' %}",
+    "_copy_without_render": [
+        "node_modules/**",
+        "bun.lock"
+    ]
 }

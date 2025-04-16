@@ -44,7 +44,7 @@ bun run build
   Vite is a modern frontend build tool and development server. It leverages native ES modules and uses esbuild for fast dependency pre-bundling. Vite provides instant server start, lightning-fast hot module replacement (HMR), and optimized production builds.
 
 - **TanStack Router**  
-  TanStack Router is a powerful, type-safe routing solution for React. It supports nested routes, route-level data loaders, and error boundaries. It offers fine-grained control over routing logic, integrates seamlessly with React’s Suspense, and is ideal for applications that need declarative routing patterns.
+  TanStack Router is a powerful, type-safe routing solution for React. It supports nested routes, route-level data loaders, and error boundaries. It offers fine-grained control over routing logic, integrates seamlessly with React's Suspense, and is ideal for applications that need declarative routing patterns.
 
 ---
 
@@ -77,8 +77,33 @@ bun run build
 
 ### 🧪 Testing
 
-**TBD**  
-(Currently, no testing libraries included. Candidates: Vitest, Testing Library, Cypress, Playwright.)
+- **Vitest**  
+  Vitest is the primary testing framework, designed specifically for Vite-based projects. It offers fast test execution with native ESM support and Jest-compatible APIs.
+
+  **Running Tests:**
+
+  Run tests once
+  ```bash
+  bun run test
+  ```
+
+  Run tests in watch mode
+  ```bash
+  bun run test:watch
+  ```
+
+  Run tests with coverage report
+  ```bash
+  bun run test:coverage
+  ```
+
+  **Viewing Coverage Results:**
+  After running the coverage command, open the HTML report in your browser:
+
+  Open coverage report in default browser
+  ```bash
+  bun run test:view
+  ```
 
 ---
 
