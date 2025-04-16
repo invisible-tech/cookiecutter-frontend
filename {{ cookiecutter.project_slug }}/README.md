@@ -82,26 +82,27 @@ bun run build
 
   **Running Tests:**
 
+  Run tests once
+  ```bash
+  bun run test
   ```
-  # Run tests once
-  npm test
 
-  # Run tests in watch mode
-  npm run test:watch
+  Run tests in watch mode
+  ```bash
+  bun run test:watch
+  ```
 
-  # Run tests with coverage report
-  npm run test:coverage
+  Run tests with coverage report
+  ```bash
+  bun run test:coverage
   ```
 
   **Viewing Coverage Results:**
   After running the coverage command, open the HTML report in your browser:
 
-  ```
-  # Open in default browser
-  open coverage/index.html
-
-  # Or navigate directly in your browser to
-  file:///path/to/your/project/coverage/index.html
+  Open coverage report in default browser
+  ```bash
+  bun run test:view
   ```
 
 ---
