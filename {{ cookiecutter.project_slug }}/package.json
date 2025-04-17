@@ -12,7 +12,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:view": "open coverage/index.html"
+    "test:view": "open coverage/index.html",
+    {% if '3' in cookiecutter.tests %}
+    "check:test": "checkly test --config checkly/checkly.config.ts --record",
+    "check:preview": "checkly test --config checkly/checkly.config.ts --record --verbose",
+    "check:deploy": "checkly deploy --config checkly/checkly.config.ts --force",
+    {% endif %}
   },
   "dependencies": {
     "@radix-ui/react-slot": "1.2.0",
@@ -39,6 +44,9 @@
     "@types/react-dom": "19.1.2",
     "@vitejs/plugin-react": "4.4.0",
     "@vitest/coverage-v8": "3.1.1",
+    {% if '3' in cookiecutter.tests %}
+    "checkly": "^5.8.0",
+    {% endif %}
     "eslint": "9.24.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-react-hooks": "5.2.0",

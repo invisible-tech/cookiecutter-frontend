@@ -1,0 +1,30 @@
+{% if '3' in cookiecutter.tests %}
+name: Deploy Checkly Checks
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
+  CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
+
+jobs:
+  deploy-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Verify Checkly credentials
+        run: |
+          if [ -z "$CHECKLY_API_KEY" ] || [ -z "$CHECKLY_ACCOUNT_ID" ]; then
+            echo "::error::Missing Checkly credentials"
+            exit 1
+          fi
+      - run: npm run check:deploy
+{% endif %}
