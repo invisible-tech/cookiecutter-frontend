@@ -1,6 +1,10 @@
 {% if '3' in cookiecutter.tests %}
 import { BrowserCheck, group } from 'checkly/constructs';
 
+if (!process.env.CHECKLY_BASE_URL) {
+  throw new Error("Missing CHECKLY_BASE_URL environment variable.");
+}
+
 group('Smoke UI', () => {
   new BrowserCheck('homepage-loads', {
     name: 'Homepage renders',

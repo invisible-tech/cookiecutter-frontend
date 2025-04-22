@@ -2,6 +2,10 @@
 import { ApiCheck, group } from 'checkly/constructs';
 import { getAuthToken } from '../../helpers/auth.js';
 
+if (!process.env.CHECKLY_BASE_URL) {
+  throw new Error("Missing CHECKLY_BASE_URL environment variable.");
+}
+
 group('Smoke API', () => {
   new ApiCheck('health-endpoint', {
     name: 'GET /health',
