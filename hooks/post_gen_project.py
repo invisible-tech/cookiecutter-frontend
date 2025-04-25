@@ -4,17 +4,18 @@ import os
 import shutil
 import glob
 
+# Configuration
+SHOULD_DELETE_SELF = True
 
-def remove_if_exists(path):
+
+def remove_file(path):
     if os.path.isfile(path):
         os.remove(path)
-    elif os.path.isdir(path) and not os.listdir(path):
+
+
+def remove_folder_if_empty(path):
+    if os.path.isdir(path) and not os.listdir(path):
         os.rmdir(path)
-
-
-def remove_folder(path):
-    if os.path.isdir(path):
-        shutil.rmtree(path)
 
 
 def clean_bun_artifacts():
@@ -34,22 +35,25 @@ def clean_tests():
     wants_e2e = "E" in tests
 
     if not wants_e2e:
-        remove_folder("checkly")
-        remove_if_exists(".github/workflows/checkly-deploy.yml")
-        remove_if_exists(".github/workflows")
-        remove_if_exists(".github")
+        remove_file(".github/workflows/checkly-deploy.yml")
+        remove_folder_if_empty(".github/workflows")
+        remove_folder_if_empty(".github")
+
+        shutil.rmtree("checkly", ignore_errors=True)
 
     if not wants_unit:
-        remove_folder("src/__tests__/unit")
+        shutil.rmtree("src/__tests__/unit", ignore_errors=True)
 
     if not wants_integration:
-        remove_folder("src/__tests__/integration")
+        shutil.rmtree("src/__tests__/integration", ignore_errors=True)
 
-    if os.path.isdir("src/__tests__") and not os.listdir("src/__tests__"):
-        remove_folder("src/__tests__")
+    remove_folder_if_empty("src/__tests__")
 
 
 def self_delete():
+    if not SHOULD_DELETE_SELF:
+        return
+
     script_path = os.path.realpath(__file__)
     try:
         os.remove(script_path)
