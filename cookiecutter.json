@@ -7,7 +7,7 @@
     "email": "{{ cookiecutter.first_name.lower() }}.{{ cookiecutter.last_name.lower() }}@invisible.email",
     "tests": {
         "type": "string",
-        "prompt": "Test suites to include → 1:unit 2:integration 3:e2e/api (e.g. 1, 13, 123)",
+        "prompt": "Test suites to include → 1:unit 2:integration 3:e2e/api (e.g. 13, 123)",
         "default": "123"
     },
     "release_date": "{% now 'local' %}",
