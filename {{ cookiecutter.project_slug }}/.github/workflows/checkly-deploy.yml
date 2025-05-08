@@ -1,6 +1,6 @@
 {% set tests_value = cookiecutter.tests.split(':')[0] | upper %}
 {% if 'E' in tests_value %}
-name: Deploy Checkly Checks
+name: Deploy Playwright & Checkly Checks
 
 on:
   push:
@@ -8,26 +8,44 @@ on:
   workflow_dispatch:
 
 env:
-  {% raw %}
   CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
   CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
-  {% endraw %}
 
 jobs:
   deploy-checks:
+    name: Deploy Playwright & Checkly Checks
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 'latest'
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Install Playwright Browsers
+        run: bunx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: bunx playwright test
+
+      - name: Validate Checkly configuration
+        run: bunx checkly validate --config checkly/checkly.config.ts
+
       - name: Verify Checkly credentials
         run: |
           if [ -z "$CHECKLY_API_KEY" ] || [ -z "$CHECKLY_ACCOUNT_ID" ]; then
-            echo "::error::Missing Checkly credentials"
+            echo "Error: Required Checkly credentials are missing"
             exit 1
           fi
-      - run: npm run check:deploy
+
+      - name: Deploy updated checks to Checkly
+        run: bunx checkly push --config checkly/checkly.config.ts
 {% endif %}
