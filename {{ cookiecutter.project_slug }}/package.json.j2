@@ -1,7 +1,4 @@
-{% set tests_value = cookiecutter.tests.split(':')[
-    0
-  ] | upper %
-}
+{% set tests_value = cookiecutter.tests.split(':')[0] | upper %}
 {
   "name": "{{ cookiecutter.project_slug }}",
   "private": true,
@@ -16,12 +13,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:view": "open coverage/index.html"{% if 'E' in tests_value %
-    },
+    "test:view": "open coverage/index.html"{% if 'E' in tests_value %},
     "check:test": "checkly test --config checkly/checkly.config.ts --record",
     "check:preview": "checkly test --config checkly/checkly.config.ts --record --verbose",
-    "check:deploy": "checkly deploy --config checkly/checkly.config.ts --force"{% endif %
-    }
+    "check:deploy": "checkly deploy --config checkly/checkly.config.ts --force"{% endif %}
   },
   "dependencies": {
     "dotenv": "16.5.0",
@@ -32,12 +27,8 @@
     "clsx": "2.1.1",
     "date-fns": "4.1.0",
     "lodash-es": "4.17.21",
-    "lucide-react": "0.488.0",
-    {% if 'E' in tests_value %
-    }
-    "@playwright/test": "1.52.0",
-    {% endif %
-    }
+    "lucide-react": "0.488.0",{% if 'E' in tests_value %}
+    "@playwright/test": "1.52.0",{% endif %}
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "tailwind-merge": "3.2.0",
@@ -53,12 +44,8 @@
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
     "@vitejs/plugin-react": "4.4.0",
-    "@vitest/coverage-v8": "3.1.1",
-    {% if 'E' in tests_value %
-    }
-    "checkly": "^5.8.0",
-    {% endif %
-    }
+    "@vitest/coverage-v8": "3.1.1",{% if 'E' in tests_value %}
+    "checkly": "^5.8.0",{% endif %}
     "eslint": "9.24.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-react-hooks": "5.2.0",
