@@ -1,5 +1,6 @@
 {% set tests_value = cookiecutter.tests.split(':')[0] | upper %}
 {% if 'E' in tests_value %}
+{% raw %}
 name: Deploy Playwright & Checkly Checks
 
 on:
@@ -48,4 +49,5 @@ jobs:
 
       - name: Deploy updated checks to Checkly
         run: bunx checkly push --config checkly/checkly.config.ts
+{% endraw %}
 {% endif %}
