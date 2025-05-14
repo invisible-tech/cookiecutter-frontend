@@ -4,9 +4,6 @@ import os
 import shutil
 import glob
 
-# Configuration
-SHOULD_DELETE_SELF = True
-
 
 def remove_file(path):
     if os.path.isfile(path):
@@ -19,13 +16,9 @@ def remove_folder_if_empty(path):
 
 
 def clean_bun_artifacts():
-    node_modules_path = os.path.join(os.getcwd(), "node_modules")
-    if os.path.exists(node_modules_path):
-        shutil.rmtree(node_modules_path)
-
-    for bun_lock_file in glob.glob("**/bun.lock", recursive=True):
-        if os.path.exists(bun_lock_file):
-            os.remove(bun_lock_file)
+    shutil.rmtree(os.path.join(os.getcwd(), "node_modules"), ignore_errors=True)
+    for bun_lock in glob.glob("**/bun.lock", recursive=True):
+        remove_file(bun_lock)
 
 
 def clean_tests():
@@ -38,8 +31,11 @@ def clean_tests():
         remove_file(".github/workflows/checkly-deploy.yml")
         remove_folder_if_empty(".github/workflows")
         remove_folder_if_empty(".github")
-
         shutil.rmtree("checkly", ignore_errors=True)
+
+        project_slug = "{{ cookiecutter.project_slug }}"
+        remove_file(os.path.join(project_slug, "playwright.config.ts"))
+        remove_file(os.path.join(project_slug, "checkly.config.ts"))
 
     if not wants_unit:
         shutil.rmtree("src/__tests__/unit", ignore_errors=True)
@@ -51,12 +47,8 @@ def clean_tests():
 
 
 def self_delete():
-    if not SHOULD_DELETE_SELF:
-        return
-
-    script_path = os.path.realpath(__file__)
     try:
-        os.remove(script_path)
+        os.remove(os.path.realpath(__file__))
     except Exception:
         pass
 

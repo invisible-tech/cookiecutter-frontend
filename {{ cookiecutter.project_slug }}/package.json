@@ -16,7 +16,9 @@
     "test:view": "open coverage/index.html"{% if 'E' in tests_value %},
     "check:test": "checkly test --config checkly/checkly.config.ts --record",
     "check:preview": "checkly test --config checkly/checkly.config.ts --record --verbose",
-    "check:deploy": "checkly deploy --config checkly/checkly.config.ts --force"{% endif %}
+    "check:deploy":  "checkly deploy --config checkly/checkly.config.ts --force",
+    "playwright:install": "playwright install",
+    "playwright:test":    "playwright test --config=playwright.config.ts"{% endif %}
   },
   "dependencies": {
     "dotenv": "16.5.0",
