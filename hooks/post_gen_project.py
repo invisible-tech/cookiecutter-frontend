@@ -27,36 +27,35 @@ def clean_tests():
     wants_integration = "I" in tests
     wants_e2e = "E" in tests
 
-    if not wants_e2e:
-        remove_file(".github/workflows/checkly-deploy.yml")
-        remove_folder_if_empty(".github/workflows")
-        remove_folder_if_empty(".github")
-        shutil.rmtree("checkly", ignore_errors=True)
+    project_root = os.getcwd()
 
-        project_slug = "{{ cookiecutter.project_slug }}"
-        remove_file(os.path.join(project_slug, "playwright.config.ts"))
-        remove_file(os.path.join(project_slug, "checkly.config.ts"))
+    if not wants_e2e:
+        remove_file(
+            os.path.join(project_root, ".github", "workflows", "checkly-deploy.yml")
+        )
+        remove_folder_if_empty(os.path.join(project_root, ".github", "workflows"))
+        remove_folder_if_empty(os.path.join(project_root, ".github"))
+        shutil.rmtree(os.path.join(project_root, "checkly"), ignore_errors=True)
+        remove_file(os.path.join(project_root, "playwright.config.ts"))
+        remove_file(os.path.join(project_root, "checkly.config.ts"))
 
     if not wants_unit:
-        shutil.rmtree("src/__tests__/unit", ignore_errors=True)
+        shutil.rmtree(
+            os.path.join(project_root, "src", "__tests__", "unit"), ignore_errors=True
+        )
 
     if not wants_integration:
-        shutil.rmtree("src/__tests__/integration", ignore_errors=True)
+        shutil.rmtree(
+            os.path.join(project_root, "src", "__tests__", "integration"),
+            ignore_errors=True,
+        )
 
-    remove_folder_if_empty("src/__tests__")
-
-
-def self_delete():
-    try:
-        os.remove(os.path.realpath(__file__))
-    except Exception:
-        pass
+    remove_folder_if_empty(os.path.join(project_root, "src", "__tests__"))
 
 
 def main():
     clean_bun_artifacts()
     clean_tests()
-    self_delete()
 
 
 if __name__ == "__main__":
