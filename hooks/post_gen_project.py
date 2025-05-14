@@ -17,8 +17,12 @@ def remove_folder_if_empty(path):
 
 def clean_bun_artifacts():
     shutil.rmtree(os.path.join(os.getcwd(), "node_modules"), ignore_errors=True)
+
     for bun_lock in glob.glob("**/bun.lock", recursive=True):
         remove_file(bun_lock)
+
+    yarn_path = os.path.join(os.getcwd(), "node_modules", "yarn")
+    shutil.rmtree(yarn_path, ignore_errors=True)
 
 
 def clean_tests():
