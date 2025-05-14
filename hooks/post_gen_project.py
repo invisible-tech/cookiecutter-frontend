@@ -55,14 +55,9 @@ def clean_tests():
     remove_folder_if_empty(os.path.join(project_root, "src", "__tests__"))
 
 
-def reinstall_bun():
-    subprocess.run(["bun", "install"], check=False)
-
-
 def main():
     clean_bun_artifacts()
     clean_tests()
-    reinstall_bun()
 
 
 if __name__ == "__main__":
