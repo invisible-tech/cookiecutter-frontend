@@ -1,4 +1,5 @@
-def pre_gen_project(context):
+#!/usr/bin/env python
+def pre_gen_project():
     print("Running pre_gen_project hook...")
 
     tests_input = context["cookiecutter"]["tests"]
@@ -18,3 +19,11 @@ def pre_gen_project(context):
     context["cookiecutter"]["tests_flags"] = flags
 
     print(f"Set tests_flags: {flags}")
+
+
+def main():
+    pre_gen_project()
+
+
+if __name__ == "__main__":
+    main()
