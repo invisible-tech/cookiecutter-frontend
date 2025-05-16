@@ -1,10 +1,20 @@
-def pre_gen_project(cookiecutter, **kwargs):
-    code = cookiecutter["tests"].split(":")[0].upper()
+def pre_gen_project(context):
+    print("Running pre_gen_project hook...")
 
-    cookiecutter["tests"] = code
+    tests_input = context["cookiecutter"]["tests"]
+    code = tests_input.split(":")[0].strip().upper()
 
-    cookiecutter["tests_flags"] = {
+    print(f"Original tests input: {tests_input}")
+    print(f"Extracted test code: {code}")
+
+    context["cookiecutter"]["tests"] = code
+
+    flags = {
         "unit": code in ("U", "UI", "UE", "UIE"),
         "integration": code in ("I", "UI", "IE", "UIE"),
         "e2e": code in ("E", "UE", "IE", "UIE"),
     }
+
+    context["cookiecutter"]["tests_flags"] = flags
+
+    print(f"Set tests_flags: {flags}")
