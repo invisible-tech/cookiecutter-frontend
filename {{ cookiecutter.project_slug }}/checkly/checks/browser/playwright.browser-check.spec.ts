@@ -1,5 +1,4 @@
-{% set tests_value = cookiecutter.tests.split(':')[0] | upper %}
-{% if 'E' in tests_value %}
+{% if tests_flags.e2e %}
 import { test, expect } from '@playwright/test';
 
 test('example.com loads and shows heading', async ({ page }) => {

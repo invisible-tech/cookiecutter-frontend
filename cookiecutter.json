@@ -5,44 +5,16 @@
     "first_name": "Your first name",
     "last_name": "Your last name",
     "email": "{{ cookiecutter.first_name.lower() }}.{{ cookiecutter.last_name.lower() }}@invisible.email",
-    "tests": {
-        "description": "Select test types",
-        "type": "enum",
-        "choices": [
-            {
-                "key": "X",
-                "label": "No tests"
-            },
-            {
-                "key": "U",
-                "label": "Unit tests (Vitest)"
-            },
-            {
-                "key": "I",
-                "label": "Integration tests (Vitest)"
-            },
-            {
-                "key": "E",
-                "label": "E2E/API/Browser tests (Checkly)"
-            },
-            {
-                "key": "UI",
-                "label": "Unit + Integration"
-            },
-            {
-                "key": "UE",
-                "label": "Unit + E2E/API"
-            },
-            {
-                "key": "IE",
-                "label": "Integration + E2E/API"
-            },
-            {
-                "key": "UIE",
-                "label": "All tests"
-            }
-        ]
-    },
+    "tests": [
+        "X: No tests",
+        "U: Unit tests (Vitest)",
+        "I: Integration tests (Vitest)",
+        "E: E2E/API/Browser tests (Checkly)",
+        "UI: Unit + Integration",
+        "UE: Unit + E2E/API",
+        "IE: Integration + E2E/API",
+        "UIE: All tests"
+    ],
     "release_date": "{% now 'local' %}",
     "_copy_without_render": [
         "node_modules/**",

@@ -1,5 +1,4 @@
-{% set tests_value = cookiecutter.tests.split(':')[0] | upper %}
-{% if 'E' in tests_value %}
+{% if tests_flags.e2e %}
 export async function getAuthToken() {
   const res = await fetch(process.env.AUTH_URL as string, {
     method: 'POST',
