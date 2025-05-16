@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 import { BrowserCheck, group } from 'checkly/constructs';
 
 if (!process.env.CHECKLY_BASE_URL) {

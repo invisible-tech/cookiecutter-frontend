@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 import { test, expect } from '@playwright/test';
 
 test('example.com loads and shows heading', async ({ page }) => {

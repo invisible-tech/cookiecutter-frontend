@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 import 'dotenv/config'
 import { defineConfig } from 'checkly'
 import { Frequency } from 'checkly/constructs'

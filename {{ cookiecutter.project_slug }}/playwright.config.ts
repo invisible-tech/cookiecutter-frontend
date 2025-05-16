@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 import { defineConfig } from '@playwright/test'
 
 export default defineConfig({

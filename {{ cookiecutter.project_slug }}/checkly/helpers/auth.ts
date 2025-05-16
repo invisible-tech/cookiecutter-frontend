@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 export async function getAuthToken() {
   const res = await fetch(process.env.AUTH_URL as string, {
     method: 'POST',

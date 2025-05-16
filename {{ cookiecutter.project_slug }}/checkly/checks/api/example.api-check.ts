@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 import { ApiCheck, group } from 'checkly/constructs';
 import { getAuthToken } from '../../helpers/auth.js';
 

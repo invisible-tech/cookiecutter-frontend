@@ -1,4 +1,4 @@
-{% if tests_flags.e2e %}
+{% if cookiecutter.tests_flags.e2e %}
 {% raw %}
 name: Deploy Playwright & Checkly Checks
 
