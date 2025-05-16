@@ -16,7 +16,6 @@ Set test-suite flags
         "integration": is_int,
         "e2e": is_e2e,
     },
-    # flattened flags for quick access in templates
     "unit":        is_unit,
     "integration": is_int,
     "e2e":         is_e2e,
