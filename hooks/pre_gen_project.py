@@ -23,5 +23,6 @@ Set test-suite flags
 -------------------------------------------------------------------------------
 """
 
-print(f"[HOOK] tests option → { {{ cookiecutter.tests }} }")
-print(f"[HOOK] flags        → { {{ cookiecutter.tests_flags }} }")
+print("[HOOK] tests option → {{ cookiecutter.tests }}")
+print("[HOOK] flags        → {{ cookiecutter.tests_flags }}")
+print("[HOOK] E2E          → {{ cookiecutter.tests_flags.e2e }}")
