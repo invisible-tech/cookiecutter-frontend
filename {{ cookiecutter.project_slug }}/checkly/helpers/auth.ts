@@ -9,7 +9,11 @@ export async function getAuthToken() {
     })
   });
 
-  if (!res.ok) throw new Error(`Auth failed: ${res.statusText}`);
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Auth failed: ${res.status} ${res.statusText}. Response: ${errorText}`);
+  }
+
   const { access_token } = await res.json();
   return access_token as string;
 }
