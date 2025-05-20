@@ -79,12 +79,20 @@ def clean_tests():
 
     remove_folder_if_empty(os.path.join(project_root, "src", "__tests__"))
 
+    return wants_e2e
+
 
 def main():
     try:
         clean_bun_artifacts()
-        clean_tests()
+        wants_e2e = clean_tests()
         logging.info("Post-generation cleanup complete.")
+
+        if wants_e2e:
+            logging.warning(
+                "If the initial bun install fails, try again — Playwright may occasionally trigger a false alarm. A second run should fix it."
+            )
+
     except Exception as e:
         logging.critical(f"Unexpected error during cleanup: {e}", exc_info=True)
 
