@@ -16,9 +16,6 @@ Set test-suite flags
         "integration": is_int,
         "e2e": is_e2e,
     },
-    "unit":        is_unit,
-    "integration": is_int,
-    "e2e":         is_e2e,
 }) }}
 -------------------------------------------------------------------------------
 """

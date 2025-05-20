@@ -2,24 +2,41 @@
 import os
 import shutil
 import glob
-import subprocess
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 
 def remove_file(path):
     if os.path.isfile(path):
-        os.remove(path)
+        try:
+            os.remove(path)
+            logging.info(f"Deleted file: {path}")
+        except Exception as e:
+            logging.error(f"Failed to delete file: {path} — {e}")
 
 
 def remove_folder_if_empty(path):
     if os.path.isdir(path) and not os.listdir(path):
-        os.rmdir(path)
+        try:
+            os.rmdir(path)
+            logging.info(f"Removed empty folder: {path}")
+        except Exception as e:
+            logging.error(f"Failed to remove folder: {path} — {e}")
 
 
 def clean_bun_artifacts():
+    logging.info("Cleaning Bun artifacts...")
     for bun_lock in glob.glob("**/bun.lock", recursive=True):
         remove_file(bun_lock)
 
-    shutil.rmtree(os.path.join(os.getcwd(), "node_modules"), ignore_errors=True)
+    node_modules_path = os.path.join(os.getcwd(), "node_modules")
+    if os.path.exists(node_modules_path):
+        try:
+            shutil.rmtree(node_modules_path)
+            logging.info("Removed node_modules")
+        except Exception as e:
+            logging.error(f"Failed to remove node_modules: {e}")
 
 
 def clean_tests():
@@ -28,9 +45,14 @@ def clean_tests():
     wants_integration = "I" in tests
     wants_e2e = "E" in tests
 
+    logging.info(
+        f"Configured test flags — Unit: {wants_unit}, Integration: {wants_integration}, E2E: {wants_e2e}"
+    )
+
     project_root = os.getcwd()
 
     if not wants_e2e:
+        logging.info("E2E tests not selected — removing related files.")
         remove_file(
             os.path.join(project_root, ".github", "workflows", "checkly-deploy.yml")
         )
@@ -41,11 +63,15 @@ def clean_tests():
         remove_file(os.path.join(project_root, "checkly.config.ts"))
 
     if not wants_unit:
+        logging.info("Unit tests not selected — removing unit test files.")
         shutil.rmtree(
             os.path.join(project_root, "src", "__tests__", "unit"), ignore_errors=True
         )
 
     if not wants_integration:
+        logging.info(
+            "Integration tests not selected — removing integration test files."
+        )
         shutil.rmtree(
             os.path.join(project_root, "src", "__tests__", "integration"),
             ignore_errors=True,
@@ -55,8 +81,12 @@ def clean_tests():
 
 
 def main():
-    clean_bun_artifacts()
-    clean_tests()
+    try:
+        clean_bun_artifacts()
+        clean_tests()
+        logging.info("Post-generation cleanup complete.")
+    except Exception as e:
+        logging.critical(f"Unexpected error during cleanup: {e}", exc_info=True)
 
 
 if __name__ == "__main__":
